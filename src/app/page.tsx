@@ -200,7 +200,7 @@ export default function Home() {
       <nav className="sticky top-0 z-50 bg-black/95 backdrop-blur-md border-b border-amber-600/20 h-20 flex items-center">
         <div className="max-w-7xl mx-auto px-6 w-full flex justify-between items-center">
           <div className="flex flex-col items-center">
-             <h1 className="text-2xl font-black tracking-widest text-amber-500 italic">KOSA</h1>
+             <img src="/logo/logo.png" alt="KOSA" className="h-16 w-auto" />
           </div>
           <div className="hidden md:flex space-x-reverse space-x-10 text-gray-300 font-bold text-sm">
             <button onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})} className="text-amber-400 border-b border-amber-500 mx-2">الرئيسية</button>
@@ -481,7 +481,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="bg-black text-white py-20 text-center">
          <div className="max-w-7xl mx-auto px-6">
-            <h1 className="text-3xl font-black text-amber-500 italic mb-6">KOSA</h1>
+            <img src="/logo/logo.png" alt="KOSA" className="h-20 w-auto mx-auto mb-6" />
             <p className="text-gray-500 max-w-md mx-auto mb-10 italic">من قلب تندوف، نقدم أجود ما جادت به الطبيعة للعناية بجمالكِ.</p>
             <div className="flex justify-center gap-6 mb-12">
                <MessageCircle className="text-gray-400 hover:text-amber-500 cursor-pointer transition-colors" />

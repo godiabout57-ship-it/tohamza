@@ -140,7 +140,7 @@ export default function AdminDashboard() {
     <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row font-sans text-right" dir="rtl">
       {/* Sidebar */}
       <div className="w-full md:w-80 bg-white border-l border-amber-100 p-8 flex flex-col shadow-lg z-10 sticky top-0 md:h-screen">
-         <h1 className="text-3xl font-black text-amber-500 italic mb-12 text-center">KOSA ADMIN</h1>
+         <img src="/logo/logo.png" alt="KOSA ADMIN" className="h-16 w-auto mx-auto mb-12" />
          
          <div className="space-y-4 flex-1">
             <button onClick={() => setActiveTab('products')} className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl font-black transition-all ${activeTab === 'products' ? 'bg-amber-500 text-white shadow-md' : 'text-gray-500 hover:bg-amber-50'}`}>
