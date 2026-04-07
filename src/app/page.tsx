@@ -167,7 +167,7 @@ export default function Home() {
     if (!checkoutData.name || !checkoutData.state || !checkoutData.address || !checkoutData.phone) return;
     
     // totalAmount will be calculated in the component
-    const totalAmount = cart.reduce((acc, item) => acc + ((item.discountPrice || item.price) * item.quantity), 0);
+    const totalAmount = cart.reduce((acc, item) => acc + ((Number(item.discountPrice) || Number(item.price)) * item.quantity), 0);
     
     const newOrder = {
       id: Date.now().toString(),
@@ -187,7 +187,7 @@ export default function Home() {
     setOrderSuccess(true);
   };
 
-  const totalAmount = cart.reduce((acc, item) => acc + ((item.discountPrice || item.price) * item.quantity), 0);
+  const totalAmount = cart.reduce((acc, item) => acc + ((Number(item.discountPrice) || Number(item.price)) * item.quantity), 0);
 
   const scrollTo = (id: any) => {
     const element = document.getElementById(id);
@@ -392,29 +392,32 @@ export default function Home() {
       {isCartOpen && (
         <div className="fixed inset-0 z-[110] flex justify-end">
            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsCartOpen(false)}></div>
-           <div className="relative w-full max-w-md bg-white h-full p-8 flex flex-col shadow-2xl animate-slide-left">
-              <div className="flex justify-between items-center mb-10 border-b pb-6">
+           <div className="relative w-full max-w-md bg-white h-full p-6 md:p-8 flex flex-col shadow-2xl animate-slide-left overflow-y-auto">
+              <div className="flex justify-between items-center mb-10 border-b pb-6 shrink-0">
                  <h2 className="text-2xl font-black italic">حقيبة التسوق</h2>
                  <button onClick={() => setIsCartOpen(false)} className="text-gray-400 hover:text-black"><X size={32}/></button>
               </div>
               
               {!checkoutStep ? (
                  <>
-                    <div className="flex-1 overflow-y-auto space-y-6">
-                       {cart.map(item => (
-                         <div key={item.id} className="flex gap-4 items-center bg-gray-50 p-4 rounded-2xl">
-                            <img src={item.image} className="w-20 h-20 object-cover rounded-xl border border-white" alt={item.name} />
+                    <div className="flex-1 space-y-6">
+                       {cart.map(item => {
+                         const currentPrice = Number(item.discountPrice) || Number(item.price);
+                         return (
+                         <div key={item.id} className="flex gap-4 items-start bg-gray-50 p-4 rounded-2xl border border-gray-100">
+                            <img src={item.image} className="w-20 h-20 object-cover rounded-xl border border-white shrink-0" alt={item.name} />
                             <div className="flex-1">
-                               <h4 className="font-bold text-amber-950 text-sm">{item.name}</h4>
-                               <p className="text-amber-600 font-black">{(item.discountPrice || item.price).toLocaleString()} دج <span className="text-xs text-gray-400 font-normal">x{item.quantity}</span></p>
+                               <h4 className="font-bold text-amber-950 text-sm mb-2">{item.name}</h4>
+                               <p className="text-amber-600 font-black mb-1">المجموع: {(currentPrice * item.quantity).toLocaleString()} دج</p>
+                               <p className="text-xs text-gray-500 font-bold">سعر الوحدة: {currentPrice.toLocaleString()} دج | <span className="text-amber-500">الكمية: {item.quantity}</span></p>
                             </div>
-                            <button onClick={() => removeFromCart(item.id)} className="text-rose-500 hover:bg-rose-50 p-2 rounded-lg transition-colors"><X size={16}/></button>
+                            <button onClick={() => removeFromCart(item.id)} className="text-rose-500 hover:bg-rose-50 p-2 rounded-lg transition-colors shrink-0"><X size={16}/></button>
                          </div>
-                       ))}
+                       )})}
                        {cart.length === 0 && <p className="text-center py-20 text-gray-400 italic">حقيبتك فارغة حالياً</p>}
                     </div>
 
-                    <div className="mt-auto pt-8 border-t">
+                    <div className="mt-8 pt-8 border-t shrink-0">
                        <div className="flex justify-between text-2xl font-black mb-8 italic">
                           <span>المجموع:</span>
                           <span className="text-amber-600">{totalAmount.toLocaleString()} دج</span>
@@ -425,8 +428,8 @@ export default function Home() {
                     </div>
                  </>
               ) : (
-                 <form onSubmit={submitOrder} className="flex-1 flex flex-col">
-                    <div className="flex-1 overflow-y-auto space-y-4 px-1">
+                 <form onSubmit={submitOrder} className="flex-1 flex flex-col min-h-0 shrink-0 mb-10">
+                    <div className="flex-1 space-y-4 px-1">
                        <button type="button" onClick={() => setCheckoutStep(false)} className="text-sm font-bold text-amber-600 mb-4 inline-block">← الرجوع للسلة</button>
                        <h3 className="font-black text-xl mb-4 text-amber-950">معلومات التوصيل</h3>
                        <div>
@@ -447,7 +450,7 @@ export default function Home() {
                        </div>
                     </div>
                     
-                    <div className="mt-8 pt-6 border-t font-sans">
+                    <div className="mt-8 pt-6 border-t font-sans pb-4">
                        <div className="flex justify-between items-center text-lg font-black mb-4">
                           <span>الإجمالي المراد دفعه:</span>
                           <span className="text-amber-600">{totalAmount.toLocaleString()} دج</span>
@@ -487,7 +490,7 @@ export default function Home() {
                <MessageCircle className="text-gray-400 hover:text-amber-500 cursor-pointer transition-colors" />
                <Share2 className="text-gray-400 hover:text-amber-500 cursor-pointer transition-colors" />
             </div>
-            <div className="text-[10px] text-gray-700 font-bold tracking-[0.3em] uppercase">© 2024 KOSA BEAUTY • TINDOUF, ALGERIA</div>
+            <div className="text-[10px] text-gray-700 font-bold tracking-[0.3em] uppercase">© 2024 KOSA COSM • TINDOUF, ALGERIA</div>
          </div>
       </footer>
 
